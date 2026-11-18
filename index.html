@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Draft editor</title>
+</head>
+<body>
+  <main>
+    <label for="draft">Draft</label>
+    <textarea id="draft"></textarea>
+    <button type="button" id="save">Save</button>
+    <output id="status" aria-live="polite"></output>
+  </main>
+  <script>
+    const draft = document.getElementById("draft");
+    const status = document.getElementById("status");
+    document.getElementById("save").addEventListener("click", () => {
+      try {
+        localStorage.setItem("sandbox-draft", draft.value);
+        status.textContent = "Draft saved.";
+      } catch {
+        status.textContent = "Could not save on this device.";
+      }
+    });
+    try {
+      draft.value = localStorage.getItem("sandbox-draft") || "";
+    } catch {
+      status.textContent = "Local storage unavailable.";
+    }
+  </script>
+</body>
+</html>
